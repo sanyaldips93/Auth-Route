@@ -13,7 +13,7 @@ router.get('/login', (req, res) => {
     verifyToken();    
     return res.redirect('/auth/list');
   }
-  res.render('pages/login');
+  res.render('pages/login', {isLoggedIn: false});
 
 });
 
@@ -24,7 +24,7 @@ router.get('/register', (req, res) => {
     verifyToken();
     return res.redirect('/auth/list');
   }
-  res.render('pages/register');
+  res.render('pages/register', {isLoggedIn: false});
 
 });
 
@@ -32,9 +32,9 @@ router.get('/register', (req, res) => {
 router.get('/list', verifyToken, (req, res) => {
 
   res.cookie('token', req.cookies.token);
-  res.render('pages/list');
+  res.render('pages/list', {isLoggedIn: true});
 
-})
+});
 
 // LOGOUT 
 // has to be changes to post/delete
@@ -44,7 +44,7 @@ router.get('/logout', verifyToken, (req, res) => {
   res.clearCookie('token');
   res.redirect('/auth/login');
 
-})
+});
 
 
 // POST Routes

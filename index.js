@@ -10,6 +10,7 @@ const connectDB = require('./config/db');
 // Route Imports
 const authRoute = require('./routes/auth');
 const cookieParser = require('cookie-parser');
+const { verifyToken } = require('./helper/helper');
 
 const app = express();
 
@@ -42,9 +43,13 @@ if(process.env.ENV == 'dev') {
 }
 
 // Home Route
-app.get('/', (req, res) => {
-    res.status(200).render('pages/home');
-})
+app.get('/', (req, res, next) => {
+    if(req.cookies.token) {
+        verifyToken(req, res, next);
+    } else {
+        res.status(200).render('pages/home', {isLoggedIn: false});
+    }
+});
 
 // Authenticated Routes
 app.use('/auth', authRoute);
@@ -52,7 +57,7 @@ app.use('/auth', authRoute);
 // 404
 app.use('/', (req, res) => {
     res.send('404, Page Not Found!');
-})
+});
 
 // Server listening
 app.listen(process.env.PORT || 3000, () => console.log('Server connected!'));

@@ -1,11 +1,17 @@
-<%- include('../templates/header')-%>
+<%- include('../templates/header', {isLoggedIn: isLoggedIn})-%>
 <div class="container mx-2 my-2 px-2 py-2">
     <div class="row justify-content-center">
         <h1>Welcome to the Home Page!</h1>
     </div>
+    
     <div class="col-md-12 text-center">
-        <a class="btn btn-outline-primary btn-lg" href="/auth/register" role="button">Register</a>
-        <a class="btn btn-outline-success btn-lg" href="/auth/login" role="button">Login</a>
+        <% if (!isLoggedIn) { %>
+            <a class="btn btn-outline-primary btn-lg" href="/auth/register" role="button">Register</a>
+            <a class="btn btn-outline-success btn-lg" href="/auth/login" role="button">Login</a>
+        <% } else { %>
+            <a class="btn btn-outline-primary btn-lg" href="/auth/list" role="button">Userlist</a>
+            <a class="btn btn-outline-success btn-lg" href="/auth/logout" role="button">Logout</a>
+        <% } %> 
     </div>
 
 </div>

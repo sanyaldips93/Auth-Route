@@ -14,12 +14,18 @@
         <a class="navbar-brand" href="/">
             <img src="https://antarcticaglobal.com/images/logoantarcticaglobalblack.svg" width="100" height="30" class="d-inline-block align-top" alt="">
         </a>
-        <ul class="nav justify-content-end">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/auth/register">Register</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/auth/login">Login</a>
-            </li>
-        </ul>
+        <% if (!isLoggedIn) { %>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/auth/register">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/auth/login">Login</a>
+                </li>
+            </ul>
+        <% } else { %>
+            <ul class="nav justify-content-end"></ul>
+                <a class="nav-link" href="/auth/logout">Logout</a>
+            </ul>
+        <% } %> 
     </nav>
