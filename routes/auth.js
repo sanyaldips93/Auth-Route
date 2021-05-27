@@ -36,9 +36,11 @@ router.get('/list', verifyToken, (req, res) => {
 
 })
 
-// LOGOUT
+// LOGOUT 
+// has to be changes to post/delete
 router.get('/logout', verifyToken, (req, res) => {
 
+  // comment the next line and see the fun --> For Saptarshi
   res.clearCookie('token');
   res.redirect('/auth/login');
 
