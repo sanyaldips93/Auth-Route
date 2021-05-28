@@ -1,32 +1,60 @@
 <%- include('../templates/header', {isLoggedIn: isLoggedIn})-%>
-<table class="table table-striped table-hover table-warning">
+<div class="container ">
+
+  <table class="table table-striped table-bordered table-hover py-3 my-3">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Organisation</th>
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
+      <% let a = 1  %> 
+      <% userList.forEach(user => { %>
+        <tr>
+          <th scope="row"><%= a %> </th>
+          <td><%= user.firstname + ' ' + user.lastname %> </td>
+          <td><%= user.email %> </td>
+          <td><%= user.organisation %> </td>
+        </tr>
+        <% a++;  %> 
+      <% }); %>
     </tbody>
   </table>
+
+</div>
+
+<div class="col-md-12 text-center">
+
+  <ul class="pagination pagination-lg justify-content-center">
+    <% if (currentPage == 1 && pages > 1) { %> 
+      <li class="page-item">
+        <a class="page-link" href="/list/<%= parseInt(currentPage) + 1 %>">
+          <%= parseInt(currentPage) + 1 %>
+        </a>
+      </li>
+    <% } else if (currentPage < pages) { %>
+      <li class="page-item">
+        <a class="page-link" href="<%= parseInt(currentPage) - 1 %>">
+          <%= parseInt(currentPage) - 1 %>
+        </a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="<%= parseInt(currentPage) + 1 %>">
+          <%= parseInt(currentPage) + 1 %>
+        </a>
+      </li>
+    <% } else if (currentPage == pages && pages > 1) { %>
+      <li class="page-item">
+        <a class="page-link" href="<%= parseInt(currentPage) - 1 %>">
+          <%= parseInt(currentPage) - 1 %>
+        </a>
+      </li>
+    <% } %>
+  </ul>
+
+</div>
+
 <%- include('../templates/footer')-%>

@@ -43,7 +43,7 @@ exports.generateToken = (res, id, firstname) => {
     secure: false, // set to true if your using https
     httpOnly: true,
   });
-  res.redirect('/auth/list');
+  res.redirect('/auth/list/1');
 };
 
 // verifyToken -> helps in verifying the jwt token.

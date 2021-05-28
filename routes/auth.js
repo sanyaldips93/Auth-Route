@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { body } = require('express-validator');
 const { postRegister, postLogin } = require('../controller/ctrl.auth');
-const { verifyToken } = require('../helper/helper');
+const { verifyToken, findUsers } = require('../helper/helper');
+const User = require('../models/User');
 
 // GET ROUTES
 //LOGIN
@@ -29,10 +30,32 @@ router.get('/register', (req, res) => {
 });
 
 // GET LIST OF USERS
-router.get('/list', verifyToken, (req, res) => {
+router.get('/list/:page', verifyToken, async (req, res) => {
 
-  res.cookie('token', req.cookies.token);
-  res.render('pages/list', {isLoggedIn: true});
+  try {
+    const resPerPage = 9; // results per page
+    const page = req.params.page || 1; // Page
+    
+    const userList = await User
+      .find({})
+      .skip((resPerPage * page) - resPerPage)
+      .limit(resPerPage);
+    const numOfProducts = await User.count({});
+
+    res.cookie('token', req.cookies.token);
+    res.render('pages/list', {
+        isLoggedIn: true, 
+        userList: userList,
+        currentPage: page, 
+        pages: Math.  ceil(numOfProducts / resPerPage),
+        numOfResults: numOfProducts
+    });
+  }
+  
+  catch(e) {
+    res.cookie('token', req.cookies.token);
+    res.json({error : e});
+  }
 
 });
 
